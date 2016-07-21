@@ -1,19 +1,21 @@
 % gives two bounds for curve fitting in section
 % Fit the curve using piecewise function, below x1 and above x2 are 0 or 1
 % P = D*(sum( RFki*Zi )) + E;% linear as a funtion of other neurons
-
+% y = P
+% x = (sum( RFki*Zi ))
 
 % input:   array to fit
 % output:  D   linear coefficient
-% E   coefficient constant
+% E:  coefficient constant
+% bd: a bound to sort out the rest, if too tight, no points will get into the middle
+
 % 
-function [D,E,x1,x2] = cf_fit(x,y,PLOT)
+function [D,E,x1,x2,x_fit,y_fit] = cf_fit(x,y,bd,PLOT)
 % there is a another possbility of being Nan
 Na = isnan(y);
 x = x(~Na);
 y = y(~Na);
 
-bd = 10e-2;% a bound to sort out the rest, if too tight, no points will get into the middle
 
 x = sort(x);
 y = sort(y);
